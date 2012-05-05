@@ -1,6 +1,6 @@
 ﻿using System;
 using Raven.Client;
-using Raven.Client.Embedded;
+using Raven.Client.Document;
 
 namespace Demo1_ConsoleApp
 {
@@ -22,7 +22,10 @@ namespace Demo1_ConsoleApp
 
         static void Main(string[] args)
         {
-            IDocumentStore documentStore = new EmbeddableDocumentStore();
+            IDocumentStore documentStore = new DocumentStore()
+                                               {
+                                                   Url = "http://localhost:8080"
+                                               };
             documentStore.Initialize();
 
             using(IDocumentSession session = documentStore.OpenSession())

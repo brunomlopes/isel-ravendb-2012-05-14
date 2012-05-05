@@ -1,0 +1,735 @@
+time;logger;level;message;exception
+2012-05-05 17:46:53.8149;Raven.Database.Impl.DocumentCacher;Info;"MemoryCache Settings:
+  PhysicalMemoryLimit = 98
+  CacheMemoryLimit    = 670040064
+  PollingInterval     = 00:02:00";
+2012-05-05 17:46:53.8339;Raven.Storage.Esent.TransactionalStorage;Info;"Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096";
+2012-05-05 17:46:56.6570;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Backup/Status' was not found;
+2012-05-05 17:46:56.6990;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: IndexingExecuter, will wait for additional work;
+2012-05-05 17:46:56.6990;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: ReducingExecuter, will wait for additional work;
+2012-05-05 17:47:12.6229;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Replication/Destinations' was not found;
+2012-05-05 17:47:12.6409;Raven.Database.Server.HttpServer;Debug;Request #   1: GET     -    35 ms - <default>  - 404 - /docs/Raven/Replication/Destinations;
+2012-05-05 17:47:13.1750;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Inserted a new document with key 'Apresentação RavenDB ISEL', update: False, ;
+2012-05-05 17:47:13.1750;Raven.Database.DocumentDatabase;Debug;Put document Apresentação RavenDB ISEL with etag 00000000-0000-0100-0000-000000000001;
+2012-05-05 17:47:13.1750;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 1 because: PUT Apresentação RavenDB ISEL;
+2012-05-05 17:47:13.1750;Raven.Database.DocumentDatabase;Debug;Successfully executed 1 commands in 00:00:00.0791345;
+2012-05-05 17:47:13.1750;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 1, for: IndexingExecuter, will wait for additional work;
+2012-05-05 17:47:13.1750;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 1, for: ReducingExecuter, will wait for additional work;
+2012-05-05 17:47:13.4290;Raven.Database.Server.HttpServer;Debug;Request #   2: POST    -   370 ms - <default>  - 200 - /bulk_docs;
+2012-05-05 17:47:13.4290;Raven.Database.Server.HttpServer;Debug;"	PUT Apresentação RavenDB ISEL
+";
+2012-05-05 17:47:15.7581;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Apresenta%C3%A7%C3%A3o%20RavenDB%20ISEL' was not found;
+2012-05-05 17:47:15.7581;Raven.Database.Server.HttpServer;Debug;Request #   3: GET     -     0 ms - <default>  - 404 - /docs/Apresenta%C3%A7%C3%A3o%20RavenDB%20ISEL;
+2012-05-05 17:56:30.3228;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Replication/Destinations' was not found;
+2012-05-05 17:56:30.3228;Raven.Database.Server.HttpServer;Debug;Request #   4: GET     -    19 ms - <default>  - 404 - /docs/Raven/Replication/Destinations;
+2012-05-05 17:56:30.4808;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Inserted a new document with key 'RavenDB/ISEL', update: False, ;
+2012-05-05 17:56:30.4808;Raven.Database.DocumentDatabase;Debug;Put document RavenDB/ISEL with etag 00000000-0000-0100-0000-000000000002;
+2012-05-05 17:56:30.4828;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 2 because: PUT RavenDB/ISEL;
+2012-05-05 17:56:30.4828;Raven.Database.DocumentDatabase;Debug;Successfully executed 1 commands in 00:00:00.0168425;
+2012-05-05 17:56:30.4828;Raven.Database.Server.HttpServer;Debug;Request #   5: POST    -    17 ms - <default>  - 200 - /bulk_docs;
+2012-05-05 17:56:30.4828;Raven.Database.Server.HttpServer;Debug;"	PUT RavenDB/ISEL
+";
+2012-05-05 17:56:30.4828;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 2, for: IndexingExecuter, will wait for additional work;
+2012-05-05 17:56:30.4828;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 2, for: ReducingExecuter, will wait for additional work;
+2012-05-05 17:56:32.3020;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 17:56:32.4020;Raven.Database.Server.HttpServer;Debug;Request #   6: GET     -   111 ms - <default>  - 200 - /docs/RavenDB/ISEL;
+2012-05-05 17:56:55.4403;Raven.Database.Storage.IndexDefinitionStorage;Info;"New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+";
+2012-05-05 17:56:55.6573;Raven.Database.Indexing.IndexStorage;Info;Creating index Raven/DocumentsByEntityName with encoded name Raven/DocumentsByEntityName;
+2012-05-05 17:56:55.9783;Raven.Database.Indexing.Index.Indexing;Debug;Creating index for Raven/DocumentsByEntityName;
+2012-05-05 17:56:56.0023;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 3 because: PUT INDEX Raven/DocumentsByEntityName;
+2012-05-05 17:56:56.0703;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 3, for: ReducingExecuter, will wait for additional work;
+2012-05-05 17:56:56.1403;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Found a total of 2 documents that requires indexing since etag: 00000000-0000-0000-0000-000000000000;
+2012-05-05 17:56:58.0454;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;After read triggers executed, 2 documents remained;
+2012-05-05 17:56:58.9575;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Going to index 2 documents in IndexName: Raven/DocumentsByEntityName, LastIndexedEtag: 00000000-0000-0000-0000-000000000000;
+2012-05-05 17:56:58.9575;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Indexing 2 documents for index: Raven/DocumentsByEntityName. (Apresentação RavenDB ISEL,RavenDB/ISEL);
+2012-05-05 17:57:04.1808;Raven.Database.Server.HttpServer;Debug;Request #   7: GET     -    14 ms - <default>  - 200 - /docs?pageSize=0&noCache=908959470;
+2012-05-05 17:57:05.0498;Raven.Database.Server.HttpServer;Debug;Request #   8: GET     -     2 ms - <default>  - 200 - /license/status?noCache=-935346426;
+2012-05-05 17:57:05.0858;Raven.Database.Server.HttpServer;Debug;Request #   9: GET     -   212 ms - <default>  - 200 - /stats?noCache=949295867;
+2012-05-05 17:57:05.1458;Raven.Database.Server.HttpServer;Debug;Request #  10: GET     -    57 ms - <default>  - 200 - /build/version?noCache=569599382;
+2012-05-05 17:57:05.2298;Raven.Database.Server.HttpServer;Debug;Request #  11: GET     -   179 ms - <default>  - 200 - /databases/?pageSize=1024&noCache=-1510192092;
+2012-05-05 17:57:05.3368;Raven.Database.Indexing.Index.Indexing;Debug;"Indexing on Apresentação RavenDB ISEL result in index Raven/DocumentsByEntityName gave document: 	__document_id IS: apresentação ravendb isel
+	Tag I-: Apresentaçãos
+	LastModified I-: 20120505164713174
+";
+2012-05-05 17:57:05.3798;Raven.Database.Indexing.Index.Indexing;Debug;"Indexing on RavenDB/ISEL result in index Raven/DocumentsByEntityName gave document: 	__document_id IS: ravendb/isel
+	Tag I-: Apresentaçãos
+	LastModified I-: 20120505165630477
+";
+2012-05-05 17:57:05.5279;Raven.Database.Indexing.Index.Indexing;Debug;Indexed 6 documents for Raven/DocumentsByEntityName;
+2012-05-05 17:57:05.5439;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 4 because: WORK BY IndexingExecuter;
+2012-05-05 17:57:05.5439;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 4, for: ReducingExecuter, will wait for additional work;
+2012-05-05 17:57:05.5439;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 4, for: IndexingExecuter, will wait for additional work;
+2012-05-05 18:01:05.2176;Raven.Database.Indexing.WorkContext;Debug;Stopping background workers;
+time;logger;level;message;exception
+2012-05-05 18:03:58.8055;Raven.Database.Impl.DocumentCacher;Info;"MemoryCache Settings:
+  PhysicalMemoryLimit = 98
+  CacheMemoryLimit    = 670040064
+  PollingInterval     = 00:02:00";
+2012-05-05 18:03:58.8245;Raven.Storage.Esent.TransactionalStorage;Info;"Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096";
+2012-05-05 18:04:01.8597;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Backup/Status' was not found;
+2012-05-05 18:04:01.9227;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: ReducingExecuter, will wait for additional work;
+2012-05-05 18:04:01.9227;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: IndexingExecuter, will wait for additional work;
+2012-05-05 18:04:02.4287;Raven.Database.Server.HttpServer;Debug;Request #   1: GET     -    27 ms - <default>  - 200 - /docs/?start=0&pageSize=20&noCache=256245731;
+2012-05-05 18:04:06.5729;Raven.Database.Server.HttpServer;Debug;Request #   2: GET     -   134 ms - <default>  - 200 - /stats?noCache=1917023159;
+2012-05-05 18:04:17.0005;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Replication/Destinations' was not found;
+2012-05-05 18:04:17.0005;Raven.Database.Server.HttpServer;Debug;Request #   3: GET     -     3 ms - <default>  - 404 - /docs/Raven/Replication/Destinations;
+2012-05-05 18:04:17.2115;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Inserted a new document with key 'RavenDB/ISEL', update: False, ;
+2012-05-05 18:04:17.2115;Raven.Database.DocumentDatabase;Debug;Put document RavenDB/ISEL with etag 00000000-0000-0100-0000-000000000001;
+2012-05-05 18:04:17.2115;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 1 because: PUT RavenDB/ISEL;
+2012-05-05 18:04:17.2115;Raven.Database.DocumentDatabase;Debug;Successfully executed 1 commands in 00:00:00.0275143;
+2012-05-05 18:04:17.2115;Raven.Database.Server.HttpServer;Debug;Request #   4: POST    -    60 ms - <default>  - 200 - /bulk_docs;
+2012-05-05 18:04:17.2225;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 1, for: IndexingExecuter, will wait for additional work;
+2012-05-05 18:04:17.2225;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 1, for: ReducingExecuter, will wait for additional work;
+2012-05-05 18:04:17.2225;Raven.Database.Server.HttpServer;Debug;"	PUT RavenDB/ISEL
+";
+2012-05-05 18:04:17.5956;Raven.Database.Server.HttpServer;Debug;Request #   5: GET     -    33 ms - <default>  - 200 - /docs/?start=0&pageSize=20&noCache=-1461971207;
+2012-05-05 18:04:18.4406;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:18.4406;Raven.Database.Server.HttpServer;Debug;Request #   6: GET     -    11 ms - <default>  - 200 - /docs/RavenDB/ISEL;
+2012-05-05 18:04:27.1601;Raven.Database.Server.HttpServer;Debug;Request #   7: GET     -     2 ms - <default>  - 200 - /docs/?start=0&pageSize=15&startsWith=/&noCache=1200969525;
+2012-05-05 18:04:28.0482;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:28.0482;Raven.Database.Server.HttpServer;Debug;Request #   8: GET     -    10 ms - <default>  - 200 - /docs/RavenDB/ISEL?noCache=798294698;
+2012-05-05 18:04:28.1482;Raven.Database.Server.HttpServer;Debug;Request #   9: GET     -     0 ms - <default>  - 200 - /docs/?start=0&pageSize=15&startsWith=RavenDB/ISEL/&noCache=-570735220;
+2012-05-05 18:04:29.0612;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:34.1165;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:40.1629;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:45.2191;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:50.2724;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:55.3327;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:04:56.7498;Raven.Database.Server.HttpServer;Warn;Error on request;"System.InvalidOperationException: Index 'Raven/DocumentsByEntityName' does not exist
+   at Raven.Database.Indexing.IndexStorage.GetIndexByName(String indexName) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 407
+   at Raven.Database.Indexing.IndexStorage.GetCurrentIndexSearcher(String indexName, IndexSearcher& searcher) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 398
+   at Raven.Database.Queries.TermsQueryRunner.GetTerms(String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunner.cs:line 30
+   at Raven.Database.Queries.TermsQueryRunnerExtensions.ExecuteGetTermsQuery(DocumentDatabase self, String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunnerExtensions.cs:line 15
+   at Raven.Database.Server.Responders.Terms.Respond(IHttpContext context) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Responders\Terms.cs:line 38
+   at Raven.Database.Server.HttpServer.DispatchRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 548
+   at Raven.Database.Server.HttpServer.HandleActualRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 315"
+2012-05-05 18:04:56.7498;Raven.Database.Server.HttpServer;Debug;Request #  10: GET     -    35 ms - <default>  - 500 - /terms/Raven/DocumentsByEntityName?field=Tag&fromValue=&pageSize=100&noCache=1337562756;
+2012-05-05 18:04:56.8088;Raven.Database.Server.HttpServer;Warn;Error on request;"System.InvalidOperationException: Index 'Raven/DocumentsByEntityName' does not exist
+   at Raven.Database.Indexing.IndexStorage.GetIndexByName(String indexName) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 407
+   at Raven.Database.Indexing.IndexStorage.GetCurrentIndexSearcher(String indexName, IndexSearcher& searcher) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 398
+   at Raven.Database.Queries.TermsQueryRunner.GetTerms(String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunner.cs:line 30
+   at Raven.Database.Queries.TermsQueryRunnerExtensions.ExecuteGetTermsQuery(DocumentDatabase self, String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunnerExtensions.cs:line 15
+   at Raven.Database.Server.Responders.Terms.Respond(IHttpContext context) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Responders\Terms.cs:line 38
+   at Raven.Database.Server.HttpServer.DispatchRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 548
+   at Raven.Database.Server.HttpServer.HandleActualRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 315"
+2012-05-05 18:04:58.3589;Raven.Database.Server.HttpServer;Warn;Error on request;"System.InvalidOperationException: Index 'Raven/DocumentsByEntityName' does not exist
+   at Raven.Database.Indexing.IndexStorage.GetIndexByName(String indexName) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 407
+   at Raven.Database.Indexing.IndexStorage.GetCurrentIndexSearcher(String indexName, IndexSearcher& searcher) in c:\Builds\RavenDB-Stable\Raven.Database\Indexing\IndexStorage.cs:line 398
+   at Raven.Database.Queries.TermsQueryRunner.GetTerms(String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunner.cs:line 30
+   at Raven.Database.Queries.TermsQueryRunnerExtensions.ExecuteGetTermsQuery(DocumentDatabase self, String index, String field, String fromValue, Int32 pageSize) in c:\Builds\RavenDB-Stable\Raven.Database\Queries\TermsQueryRunnerExtensions.cs:line 15
+   at Raven.Database.Server.Responders.Terms.Respond(IHttpContext context) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Responders\Terms.cs:line 38
+   at Raven.Database.Server.HttpServer.DispatchRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 548
+   at Raven.Database.Server.HttpServer.HandleActualRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 315"
+2012-05-05 18:05:19.4201;Raven.Database.Storage.IndexDefinitionStorage;Info;"New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+";
+2012-05-05 18:05:19.4561;Raven.Database.Indexing.IndexStorage;Info;Creating index Raven/DocumentsByEntityName with encoded name Raven/DocumentsByEntityName;
+2012-05-05 18:05:19.5361;Raven.Database.Indexing.Index.Indexing;Debug;Creating index for Raven/DocumentsByEntityName;
+2012-05-05 18:05:19.5501;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 2 because: PUT INDEX Raven/DocumentsByEntityName;
+2012-05-05 18:05:19.5501;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 2, for: ReducingExecuter, will wait for additional work;
+2012-05-05 18:05:19.5821;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Found a total of 1 documents that requires indexing since etag: 00000000-0000-0000-0000-000000000000;
+2012-05-05 18:05:19.5921;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;After read triggers executed, 1 documents remained;
+2012-05-05 18:05:19.5921;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Going to index 1 documents in IndexName: Raven/DocumentsByEntityName, LastIndexedEtag: 00000000-0000-0000-0000-000000000000;
+2012-05-05 18:05:19.6081;Raven.Database.Indexing.AbstractIndexingExecuter;Debug;Indexing 1 documents for index: Raven/DocumentsByEntityName. (RavenDB/ISEL);
+2012-05-05 18:05:19.7161;Raven.Database.Indexing.Index.Indexing;Debug;"Indexing on RavenDB/ISEL result in index Raven/DocumentsByEntityName gave document: 	__document_id IS: ravendb/isel
+	Tag I-: Presentations
+	LastModified I-: 20120505170417210
+";
+2012-05-05 18:05:19.8581;Raven.Database.Indexing.Index.Indexing;Debug;Indexed 3 documents for Raven/DocumentsByEntityName;
+2012-05-05 18:05:19.8581;Raven.Database.Indexing.WorkContext;Debug;Incremented work counter to 3 because: WORK BY IndexingExecuter;
+2012-05-05 18:05:19.8581;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 3, for: ReducingExecuter, will wait for additional work;
+2012-05-05 18:05:19.8581;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 3, for: IndexingExecuter, will wait for additional work;
+2012-05-05 18:05:21.8662;Raven.Database.Server.HttpServer;Error;Failed to properly handle error, further error handling is ignored;"System.Net.HttpListenerException (0x80004005): The specified network name is no longer available
+   at System.Net.HttpResponseStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.IO.Compression.DeflateStream.InternalWrite(Byte[] array, Int32 offset, Int32 count, Boolean isAsync)
+   at System.IO.Compression.DeflateStream.Write(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Compression.GZipStream.Write(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Stream.InternalCopyTo(Stream destination, Int32 bufferSize)
+   at System.IO.Stream.CopyTo(Stream destination)
+   at Raven.Database.Server.Abstractions.HttpListenerResponseAdapter.WriteFile(String path) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Abstractions\HttpListenerResponseAdapter.cs:line 77
+   at Raven.Database.Extensions.HttpExtensions.WriteFile(IHttpContext context, String filePath) in c:\Builds\RavenDB-Stable\Raven.Database\Extensions\HttpExtensions.cs:line 448
+   at Raven.Database.Server.Responders.SilverlightUI.Respond(IHttpContext context) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Responders\SilverlightUI.cs:line 46
+   at Raven.Database.Server.HttpServer.DispatchRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 548
+   at Raven.Database.Server.HttpServer.HandleActualRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 315"
+2012-05-05 18:05:21.9242;Raven.Database.Server.HttpServer;Warn;Error on request;"System.Net.HttpListenerException (0x80004005): The specified network name is no longer available
+   at System.Net.HttpResponseStream.Write(Byte[] buffer, Int32 offset, Int32 size)
+   at System.IO.Compression.DeflateStream.InternalWrite(Byte[] array, Int32 offset, Int32 count, Boolean isAsync)
+   at System.IO.Compression.DeflateStream.Write(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Compression.GZipStream.Write(Byte[] array, Int32 offset, Int32 count)
+   at System.IO.Stream.InternalCopyTo(Stream destination, Int32 bufferSize)
+   at System.IO.Stream.CopyTo(Stream destination)
+   at Raven.Database.Server.Abstractions.HttpListenerResponseAdapter.WriteFile(String path) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Abstractions\HttpListenerResponseAdapter.cs:line 77
+   at Raven.Database.Extensions.HttpExtensions.WriteFile(IHttpContext context, String filePath) in c:\Builds\RavenDB-Stable\Raven.Database\Extensions\HttpExtensions.cs:line 448
+   at Raven.Database.Server.Responders.SilverlightUI.Respond(IHttpContext context) in c:\Builds\RavenDB-Stable\Raven.Database\Server\Responders\SilverlightUI.cs:line 46
+   at Raven.Database.Server.HttpServer.DispatchRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 548
+   at Raven.Database.Server.HttpServer.HandleActualRequest(IHttpContext ctx) in c:\Builds\RavenDB-Stable\Raven.Database\Server\HttpServer.cs:line 315"
+2012-05-05 18:05:21.9242;Raven.Database.Server.HttpServer;Debug;Request #  11: GET     - 3.663 ms - <default>  - 500 - /silverlight/Raven.Studio.xap;
+2012-05-05 18:05:23.2973;Raven.Database.Indexing.WorkContext;Debug;Stopping background workers;
+time;logger;level;message;exception
+2012-05-05 18:05:32.7979;Raven.Database.Impl.DocumentCacher;Info;"MemoryCache Settings:
+  PhysicalMemoryLimit = 98
+  CacheMemoryLimit    = 670040064
+  PollingInterval     = 00:02:00";
+2012-05-05 18:05:32.8169;Raven.Storage.Esent.TransactionalStorage;Info;"Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096";
+2012-05-05 18:05:33.9039;Raven.Database.Storage.IndexDefinitionStorage;Info;"New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using Raven.Database.Indexing;
+public class Index_Raven_2fDocumentsByEntityName : AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @""from doc in docs 
+let Tag = doc[""""@metadata""""][""""Raven-Entity-Name""""]
+select new { Tag, LastModified = (DateTime)doc[""""@metadata""""][""""Last-Modified""""] };
+"";
+		this.AddMapDefinition(docs => from doc in docs
+			let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+			select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""], __document_id = doc.__document_id });
+		this.AddField(""LastModified"");
+		this.AddField(""__document_id"");
+		this.AddField(""Tag"");
+		this.AddQueryParameterForMap(""__document_id"");
+		this.AddQueryParameterForReduce(""__document_id"");
+	}
+}
+";
+2012-05-05 18:05:33.9179;Raven.Database.Indexing.IndexStorage.Startup;Debug;Loading saved index Raven/DocumentsByEntityName;
+2012-05-05 18:05:33.9429;Raven.Database.Indexing.Index.Indexing;Debug;Creating index for Raven/DocumentsByEntityName;
+2012-05-05 18:05:34.0099;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'Raven/Backup/Status' was not found;
+2012-05-05 18:05:34.0849;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: ReducingExecuter, will wait for additional work;
+2012-05-05 18:05:34.0849;Raven.Database.Indexing.WorkContext;Debug;No work was found, workerWorkCounter: 0, for: IndexingExecuter, will wait for additional work;
+2012-05-05 18:05:42.2174;Raven.Database.Server.HttpServer;Debug;Request #   1: GET     -    47 ms - <default>  - 200 - /docs?pageSize=0&noCache=-1898981512;
+2012-05-05 18:05:42.3664;Raven.Database.Server.HttpServer;Debug;Request #   2: GET     -    33 ms - <default>  - 200 - /docs/?start=0&pageSize=15&noCache=-282438997;
+2012-05-05 18:05:42.3954;Raven.Database.Server.HttpServer;Debug;Request #   3: GET     -    25 ms - <default>  - 200 - /license/status?noCache=-1959049291;
+2012-05-05 18:05:42.4574;Raven.Database.Server.HttpServer;Debug;Request #   4: GET     -     7 ms - <default>  - 200 - /build/version?noCache=-1455369886;
+2012-05-05 18:05:42.4864;Raven.Database.Server.HttpServer;Debug;Request #   5: GET     -   114 ms - <default>  - 200 - /stats?noCache=-1814429279;
+2012-05-05 18:05:44.3835;Raven.Database.Server.HttpServer;Debug;Request #   6: GET     -     0 ms - <default>  - 200 - /docs/?start=0&pageSize=15&startsWith=/&noCache=1909337905;
+2012-05-05 18:05:44.9146;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:05:44.9146;Raven.Database.Server.HttpServer;Debug;Request #   7: GET     -    11 ms - <default>  - 200 - /docs/RavenDB/ISEL?noCache=-479541373;
+2012-05-05 18:05:44.9626;Raven.Database.Server.HttpServer;Debug;Request #   8: GET     -     0 ms - <default>  - 200 - /docs/?start=0&pageSize=15&startsWith=RavenDB/ISEL/&noCache=1529105036;
+2012-05-05 18:05:45.0886;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'RavenDB/ISEL' was found;
+2012-05-05 18:05:46.6647;Raven.Database.Server.HttpServer;Debug;Request #   9: GET     -    28 ms - <default>  - 200 - /terms/Raven/DocumentsByEntityName?field=Tag&fromValue=&pageSize=100&noCache=-1346028137;
+2012-05-05 18:05:46.8297;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:46.9077;Raven.Database.Server.HttpServer;Debug;Request #  10: GET     -    98 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:05:46.9077;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 84 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:46.9077;Raven.Database.Server.HttpServer;Debug;Request #  11: POST    -   148 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:05:46.9077;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 84 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:48.1247;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:48.1247;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:05:48.1407;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 11 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:05:52.1780;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:52.1780;Raven.Database.Server.HttpServer;Debug;Request #  12: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:05:52.1810;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:52.1810;Raven.Database.Server.HttpServer;Debug;Request #  13: POST    -     9 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:05:52.1810;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:53.1960;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:53.1960;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:05:53.1960;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:05:57.2513;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:57.2513;Raven.Database.Server.HttpServer;Debug;Request #  14: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:05:57.2513;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:57.2513;Raven.Database.Server.HttpServer;Debug;Request #  15: POST    -     6 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:05:57.2513;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:05:58.2683;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:05:58.2683;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:05:58.2683;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:02.3216;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:02.3216;Raven.Database.Server.HttpServer;Debug;Request #  16: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:02.3216;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:02.3216;Raven.Database.Server.HttpServer;Debug;Request #  17: POST    -     8 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:02.3216;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:03.3256;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:03.3256;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:03.3256;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:07.3638;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:07.3638;Raven.Database.Server.HttpServer;Debug;Request #  18: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:07.3638;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:07.3638;Raven.Database.Server.HttpServer;Debug;Request #  19: POST    -     8 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:07.3638;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:08.3809;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:08.3809;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:08.3809;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:12.4141;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:12.4141;Raven.Database.Server.HttpServer;Debug;Request #  20: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:12.4141;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:12.4141;Raven.Database.Server.HttpServer;Debug;Request #  21: POST    -     7 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:12.4141;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:13.4132;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:13.4132;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:13.4132;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:17.4484;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:17.4484;Raven.Database.Server.HttpServer;Debug;Request #  22: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:17.4514;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:17.4514;Raven.Database.Server.HttpServer;Debug;Request #  23: POST    -     7 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:17.4514;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:18.4535;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:18.4535;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:18.4535;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:22.4897;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:22.4907;Raven.Database.Server.HttpServer;Debug;Request #  24: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:22.4907;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:22.4907;Raven.Database.Server.HttpServer;Debug;Request #  25: POST    -    10 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:22.4907;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:23.5068;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:23.5068;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:23.5068;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 2 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:27.5640;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:27.5640;Raven.Database.Server.HttpServer;Debug;Request #  26: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:27.5640;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:27.5640;Raven.Database.Server.HttpServer;Debug;Request #  27: POST    -     7 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:27.5640;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:28.5671;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:28.5671;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:28.5671;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:32.6313;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:32.6313;Raven.Database.Server.HttpServer;Debug;Request #  28: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:32.6313;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:32.6313;Raven.Database.Server.HttpServer;Debug;Request #  29: POST    -     7 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:32.6313;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:33.6333;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:33.6333;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:33.6333;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:37.6686;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:37.6696;Raven.Database.Server.HttpServer;Debug;Request #  30: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:37.6696;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:37.6696;Raven.Database.Server.HttpServer;Debug;Request #  31: POST    -    13 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:37.6696;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:38.6706;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:38.6706;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:38.6706;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:42.7159;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:42.7159;Raven.Database.Server.HttpServer;Debug;Request #  32: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:42.7289;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:42.7489;Raven.Database.Server.HttpServer;Debug;Request #  33: POST    -    32 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:42.7489;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:43.7289;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:43.7289;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:43.7289;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:47.7652;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:47.7652;Raven.Database.Server.HttpServer;Debug;Request #  34: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:47.7652;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:47.7652;Raven.Database.Server.HttpServer;Debug;Request #  35: POST    -    10 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:47.7802;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:48.7652;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:48.7652;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:48.7652;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:52.7954;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:52.7954;Raven.Database.Server.HttpServer;Debug;Request #  36: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:52.7954;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:52.8024;Raven.Database.Server.HttpServer;Debug;Request #  37: POST    -     9 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:52.8024;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:53.8045;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:53.8045;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:53.8045;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:06:58.0117;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:58.0117;Raven.Database.Server.HttpServer;Debug;Request #  38: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:06:58.0117;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:58.0117;Raven.Database.Server.HttpServer;Debug;Request #  39: POST    -     8 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:06:58.0117;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:06:58.9498;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:06:58.9498;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:06:58.9498;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:07:04.0171;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:04.0171;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:07:04.0171;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:07:04.0351;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:04.0351;Raven.Database.Server.HttpServer;Debug;Request #  40: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:07:04.0351;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:04.0351;Raven.Database.Server.HttpServer;Debug;Request #  41: POST    -     4 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:07:04.0351;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:09.0704;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:09.0704;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:07:09.0704;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:07:10.0554;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:10.0554;Raven.Database.Server.HttpServer;Debug;Request #  42: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:07:10.0554;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:10.0554;Raven.Database.Server.HttpServer;Debug;Request #  43: POST    -     3 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:07:10.0554;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 0 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:14.1017;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:14.1017;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:07:14.1017;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
+2012-05-05 18:07:15.1217;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:15.1217;Raven.Database.Server.HttpServer;Debug;Request #  44: GET     -     1 ms - <default>  - 0 - /indexes/Raven/DocumentsByEntityName?query=Tag%253APresentations&start=0&pageSize=0&aggregation=None;
+2012-05-05 18:07:15.1257;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:15.1257;Raven.Database.Server.HttpServer;Debug;Request #  45: POST    -    17 ms - <default>  - 200 - /multi_get/;
+2012-05-05 18:07:15.1447;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 0 returned out of 1 total.
+";
+2012-05-05 18:07:19.1419;Raven.Database.Indexing.Index.Querying;Debug;Issuing query on index Raven/DocumentsByEntityName for: Tag:Presentations;
+2012-05-05 18:07:19.1419;Raven.Storage.Esent.StorageActions.DocumentStorageActions;Debug;Document with key 'ravendb/isel' was found;
+2012-05-05 18:07:19.1419;Raven.Database.Server.HttpServer;Debug;"	Query: Tag:Presentations
+	Time: 1 ms
+	Index: Raven/DocumentsByEntityName
+	Results: 1 returned out of 1 total.
+";
