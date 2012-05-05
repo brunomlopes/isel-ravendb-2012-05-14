@@ -19,9 +19,10 @@ namespace Demo1_ConsoleApp
         {
             public string Nome { get; set; }
         }
+
         static void Main(string[] args)
         {
-            var documentStore = new EmbeddableDocumentStore();
+            IDocumentStore documentStore = new EmbeddableDocumentStore();
             documentStore.Initialize();
 
             using(IDocumentSession session = documentStore.OpenSession())
