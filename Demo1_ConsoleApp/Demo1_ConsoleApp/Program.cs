@@ -6,16 +6,16 @@ namespace Demo1_ConsoleApp
 {
     class Program
     {
-        class Apresentação
+        class Presentation
         {
             public string Id { get; set; }
-            public string Nome { get; set; }
-            public DateTime Data { get; set; }
-            public TimeSpan Duração { get; set; }
-            public Pessoa Apresentador { get; set; }
+            public string Name { get; set; }
+            public DateTime Date { get; set; }
+            public TimeSpan Duration { get; set; }
+            public Person Presenter { get; set; }
         }
 
-        class Pessoa
+        class Person
         {
             public string Nome { get; set; }
         }
@@ -27,16 +27,16 @@ namespace Demo1_ConsoleApp
 
             using(IDocumentSession session = documentStore.OpenSession())
             {
-                var apresentação = new Apresentação()
+                var apresentação = new Presentation
                                        {
-                                           Id = "Apresentação RavenDB ISEL",
-                                           Nome = "Document Databases com RavenDB",
-                                           Apresentador = new Pessoa()
+                                           Id = "RavenDB/ISEL",
+                                           Name = "Document Databases com RavenDB",
+                                           Presenter = new Person()
                                                               {
                                                                   Nome = "Bruno Lopes"
                                                               },
-                                           Data = new DateTime(2012, 05, 06, 09, 00, 00),
-                                           Duração = TimeSpan.FromHours(3),
+                                           Date = new DateTime(2012, 05, 06, 09, 00, 00),
+                                           Duration = TimeSpan.FromHours(3),
                                        };
 
                 session.Store(apresentação);
@@ -44,13 +44,13 @@ namespace Demo1_ConsoleApp
             }
             using(IDocumentSession session = documentStore.OpenSession())
             {
-                Apresentação apresentação = session.Load<Apresentação>("Apresentação RavenDB ISEL");
+                Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
 
-                Console.Out.WriteLine("apresentação.Id = {0}", apresentação.Id);
-                Console.Out.WriteLine("apresentação.Nome = {0}", apresentação.Nome);
-                Console.Out.WriteLine("apresentação.Apresentador.Nome = {0}", apresentação.Apresentador.Nome);
-                Console.Out.WriteLine("apresentação.Data = {0}", apresentação.Data);
-                Console.Out.WriteLine("apresentação.Duração = {0}", apresentação.Duração);
+                Console.Out.WriteLine("Presentation.Id = {0}", presentation.Id);
+                Console.Out.WriteLine("Presentation.Name = {0}", presentation.Name);
+                Console.Out.WriteLine("Presentation.Presenter.Name = {0}", presentation.Presenter.Nome);
+                Console.Out.WriteLine("Presentation.Date = {0}", presentation.Date);
+                Console.Out.WriteLine("Presentation.Duration = {0}", presentation.Duration);
             }
         }
     }
