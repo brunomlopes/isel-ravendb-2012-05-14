@@ -1,4 +1,5 @@
 ﻿using System;
+using Raven.Client;
 using Raven.Client.Embedded;
 
 namespace Demo1_ConsoleApp
@@ -21,13 +22,13 @@ namespace Demo1_ConsoleApp
         static void Main(string[] args)
         {
             var documentStore = new EmbeddableDocumentStore();
-            string id = "Apresentação RavenDB ISEL";
+            documentStore.Initialize();
 
-            using(var session = documentStore.OpenSession())
+            using(IDocumentSession session = documentStore.OpenSession())
             {
                 var apresentação = new Apresentação()
                                        {
-                                           Id = id,
+                                           Id = "Apresentação RavenDB ISEL",
                                            Nome = "Document Databases com RavenDB",
                                            Apresentador = new Pessoa()
                                                               {
@@ -40,9 +41,9 @@ namespace Demo1_ConsoleApp
                 session.Store(apresentação);
                 session.SaveChanges();
             }
-            using(var session = documentStore.OpenSession())
+            using(IDocumentSession session = documentStore.OpenSession())
             {
-                var apresentação = session.Load<Apresentação>(id);
+                Apresentação apresentação = session.Load<Apresentação>("Apresentação RavenDB ISEL");
 
                 Console.Out.WriteLine("apresentação.Id = {0}", apresentação.Id);
                 Console.Out.WriteLine("apresentação.Nome = {0}", apresentação.Nome);
