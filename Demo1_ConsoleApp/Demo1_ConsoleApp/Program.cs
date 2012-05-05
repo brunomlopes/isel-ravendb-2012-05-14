@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using Raven.Client;
 using Raven.Client.Document;
 
@@ -49,6 +50,7 @@ namespace Demo1_ConsoleApp
             }
             using (IDocumentSession session = documentStore.OpenSession())
             {
+                // READ
                 Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
 
                 Console.Out.WriteLine("Presentation.Id = {0}", presentation.Id);
@@ -56,6 +58,48 @@ namespace Demo1_ConsoleApp
                 Console.Out.WriteLine("Presentation.Presenter.Name = {0}", presentation.Presenter.Nome);
                 Console.Out.WriteLine("Presentation.Date = {0}", presentation.Date);
                 Console.Out.WriteLine("Presentation.Duration = {0}", presentation.Duration);
+            }
+            
+            using(IDocumentSession session = documentStore.OpenSession())
+            {
+                // UPDATE
+                Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
+
+                presentation.Date = new DateTime(2012, 05, 07, 20, 0, 0);
+
+                session.SaveChanges();
+            }            
+            
+            using(IDocumentSession session = documentStore.OpenSession())
+            {
+                // UPDATE - Check
+                Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
+
+                Console.Out.WriteLine("presentation.Date = {0}", presentation.Date);
+            }
+            
+            using(IDocumentSession session = documentStore.OpenSession())
+            {
+                // DELETE
+                // por entidade
+                Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
+                session.Delete(presentation);
+                session.SaveChanges();
+
+                // por chave (atenção, não entra dentro do "unit of work", mas participa em transacções)
+                //session.Advanced.DatabaseCommands.Delete("RavenDB/ISEL", null);
+
+                // dentro de uma transacção, até ter o complete, não é apagado
+                //using(var transaction = new TransactionScope()){
+                //    session.Advanced.DatabaseCommands.Delete("RavenDB/ISEL", null);
+                //    transaction.Complete();
+                //}
+            }
+            
+            using(IDocumentSession session = documentStore.OpenSession())
+            {
+                Presentation presentation = session.Load<Presentation>("RavenDB/ISEL");
+                Console.Out.WriteLine("presentation = {0}", presentation);
             }
         }
     }
