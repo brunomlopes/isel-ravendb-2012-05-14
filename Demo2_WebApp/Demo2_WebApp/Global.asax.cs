@@ -10,6 +10,7 @@ using Demo2_WebApp.Models;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
+using Raven.Abstractions.Extensions;
 
 namespace Demo2_WebApp
 {
@@ -139,6 +140,8 @@ namespace Demo2_WebApp
                                                                }
                                                        }
                                   });
+                var users = new[] {bruno, blofeld, scaramanga, largo, goldfinger};
+
                 session.Store(new Project
                                   {
                                       Id = "Projects/2",
@@ -187,6 +190,29 @@ namespace Demo2_WebApp
                                                        }
                                   });
 
+                var r = new Random(1);
+                var randomProjects = Enumerable.Range(1, 20)
+                    .Select(i => new Project
+                                     {
+                                         Id = "Projects/42" + i,
+                                         Name = string.Format("Random project {0}", i),
+                                         Activities = Enumerable
+                                             .Range(1, r.Next(10))
+                                             .Select(j => new Activity
+                                                              {
+                                                                  Name = string.Format("Activity {0}-{1}", i, j),
+                                                                  Tasks = Enumerable.
+                                                                      Range(1, r.Next(10))
+                                                                      .Select(k => new Task
+                                                                                       {
+                                                                                           Name = string.Format("Task {0}-{1}-{2}", i, j, k),
+                                                                                           Owner = users[(i + j + k)%users.Length],
+                                                                                           Done = r.Next(0,2) == 1
+                                                                                       }).ToList(),
+
+                                                              }).ToList()
+                                     });
+                randomProjects.ForEach(p => session.Store(p));
                 session.SaveChanges();
             }
 
