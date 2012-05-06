@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Raven.Client;
+using Raven.Client.Document;
+using Raven.Client.Indexes;
 
 namespace Demo2_WebApp
 {
@@ -14,6 +17,8 @@ namespace Demo2_WebApp
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static IDocumentStore Store;
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -44,6 +49,14 @@ namespace Demo2_WebApp
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
+
+            SetupRavenDB();
+        }
+
+        private void SetupRavenDB()
+        {
+            Store = new DocumentStore() { ConnectionStringName = "RavenDB" }.Initialize();
+            
         }
     }
 }
