@@ -1,0 +1,43 @@
+﻿@using Demo2_WebApp.Infrastructure
+@model Demo2_WebApp.Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Name</h2>
+
+<fieldset>
+    <div style="margin-left: 15px">
+    @foreach(var activity in Model.Activities)
+    {
+        <h3>@activity.Name</h3>
+        
+        <div style="margin-left: 15px">
+        @foreach(var task in activity.Tasks)
+        {
+            <p>
+                <strong>@task.Name</strong> 
+                @if (task.Done)
+            {
+                <text>✓</text>
+            }
+            else
+            {
+                <text>☐</text>
+            }
+            <br/>
+            @task.Owner.Name
+            
+            </p>
+        }
+        </div>
+    }
+        
+    </div>
+    
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id.IntFromId() }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
