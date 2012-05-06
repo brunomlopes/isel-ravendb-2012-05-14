@@ -1,0 +1,16 @@
+﻿@using Demo2_WebApp.Infrastructure
+@model System.Collections.Generic.IEnumerable<Demo2_WebApp.Models.Project>
+
+@{
+    ViewBag.Title = "Projectos";
+}
+
+
+<h2>@Model.Count() projectos:</h2>
+
+@foreach(var project in Model)
+{
+    <div>
+        <a href="@Url.Action("Details", new {id = project.Id.IntFromId()})"><strong>@project.Name</strong> </a> com <em>@project.Activities.Count</em> actividades.
+    </div>
+}
