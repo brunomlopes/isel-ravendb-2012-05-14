@@ -7,6 +7,11 @@ namespace Demo2_WebApp.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public IList<Activity> Activities { get; set; }
+
+        public Project()
+        {
+            Activities = new List<Activity>();
+        }
     }
 
     public class Activity
@@ -15,6 +20,11 @@ namespace Demo2_WebApp.Models
         public string Name { get; set; }
         public Person Owner { get; set; }
         public IList<Task> Tasks { get; set; }
+
+        public Activity()
+        {
+            Tasks = new List<Task>();
+        }
     }
 
     public class Task
