@@ -1,9 +1,8 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
 @section featured {
-<section class="featured">
+    <section class="featured">
     <div class="content-wrapper">
         <hgroup class="title">
             <h1>@ViewBag.Title.</h1>
@@ -15,12 +14,16 @@
     </div>
 </section>
 }
-
-
 <section class="features">
     <section class="feature">
-      @Html.ActionLink("Show First Project", "Details", "Project", new { id = 1 }, new object())
-      @Html.ActionLink("Show Second Project", "Details", "Project", new { id = 2 }, new object())
+        <ul>
+            <li>
+                @Html.ActionLink("Projecto 1", "Details", "Project", new { id = 1 }, new object())
+            </li>
+            <li>
+                @Html.ActionLink("Projecto 2", "Details", "Project", new { id = 2 }, new object())
+            </li>
+        </ul>
     </section>
     <section class="feature">
     </section>
