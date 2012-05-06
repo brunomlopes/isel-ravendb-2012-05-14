@@ -22,6 +22,7 @@ namespace Demo2_WebApp.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public Person Owner { get; set; }
+        public bool Done { get; set; }
     }
 
     public class Person
