@@ -1,3 +1,5 @@
+@model Demo2_WebApp.Models.ViewModels.HomeIndexViewModel
+
 @{
     ViewBag.Title = "Home Page";
 }
@@ -17,6 +19,14 @@
 <section class="features">
     <section class="feature">
         <ul>
+            @foreach(var personAndNumberOfTasks in Model.TasksPerPerson)
+            {
+                <li>@personAndNumberOfTasks.Owner.Name - @personAndNumberOfTasks.Count</li> 
+            }
+        </ul>
+    </section>
+    <section class="feature">
+        <ul>
             <li>
                 @Html.ActionLink("Todos os projectos", "Index","Project")
             </li>
@@ -27,8 +37,6 @@
                 @Html.ActionLink("Projecto 2", "Details", "Project", new { id = 2 }, new object())
             </li>
         </ul>
-    </section>
-    <section class="feature">
     </section>
     <section class="feature">
  
