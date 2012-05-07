@@ -28,10 +28,13 @@ namespace Demo2_WebApp.Indexes
 
             Reduce = 
                 results => results
-                    .GroupBy(g => g.Owner)
+                    // Agrupamos pelo Id do owner, por ser o que identifica univocamente o user
+                    .GroupBy(g => g.Owner.Id)
                     .Select(p => new
                                      {
-                                         Owner = p.Key, 
+                // E aqui selecionamos o primeiro Owner (são todos iguais)
+                                         Owner = p.Select(r => r.Owner).First(), 
+                // E contamos o número de tarefas
                                          Count = p.Sum(result => result.Count)
                                      });
 

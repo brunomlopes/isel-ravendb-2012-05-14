@@ -154,6 +154,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ViewModels\ProjectIndexViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomeIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
