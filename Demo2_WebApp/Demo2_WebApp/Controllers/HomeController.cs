@@ -10,22 +10,6 @@ namespace Demo2_WebApp.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "";
-
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "";
-
             return View();
         }
     }
