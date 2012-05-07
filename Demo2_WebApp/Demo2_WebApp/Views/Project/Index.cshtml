@@ -1,16 +1,22 @@
 ﻿@using Demo2_WebApp.Infrastructure
-@model System.Collections.Generic.IEnumerable<Demo2_WebApp.Models.Project>
+@model Demo2_WebApp.Models.ViewModels.ProjectIndexViewModel
 
 @{
     ViewBag.Title = "Projectos";
 }
 
 
-<h2>@Model.Count() projectos:</h2>
+<h2>@Model.Projects.Count() projectos de @Model.TotalResults:</h2>
 
-@foreach(var project in Model)
+@foreach(var project in Model.Projects)
 {
     <div>
         <a href="@Url.Action("Details", new {id = project.Id.IntFromId()})"><strong>@project.Name</strong> </a> com <em>@project.Activities.Count</em> actividades.
     </div>
 }
+<p>
+    @if(@Model.Page > 1){
+        <a href="@Url.Action("Index", new { page = @Model.Page - 1 })">< previous page </a>
+    }
+    <a href="@Url.Action("Index", new { page = @Model.Page + 1 })">next page ></a>
+</p>
