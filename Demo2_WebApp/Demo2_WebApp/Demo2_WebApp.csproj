@@ -149,6 +149,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Indexes\TasksCount_ForPerson.cs" />
     <Compile Include="Infrastructure\RavenDbController.cs" />
     <Compile Include="Infrastructure\RavenDbMVCExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
