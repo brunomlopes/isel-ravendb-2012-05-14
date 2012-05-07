@@ -1,4 +1,5 @@
 ﻿using Demo2_WebApp.Models;
+using Raven.Abstractions.Indexing;
 using Raven.Client.Indexes;
 using System.Linq;
 
@@ -15,16 +16,14 @@ namespace Demo2_WebApp.Indexes
         public TasksCount_ForPerson()
         {
             Map = projects =>
-                projects
-                .SelectMany(p => p.Activities)
-                .SelectMany(a => a.Tasks)
-                    .Select(task =>
-                            new
-                                {
-                                    task.Owner,
-                                    Count = 1
-                                }
-                    );
+                  from project in projects
+                  from task in project.Activities.SelectMany(a => a.Tasks)
+                  select
+                      new
+                      {
+                          task.Owner,
+                          Count = 1
+                      };
 
             Reduce = 
                 results => results
