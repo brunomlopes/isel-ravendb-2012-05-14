@@ -17,7 +17,11 @@
                 </div>
                 <div class="float-right">
                     <section id="login">
-                        &nbsp;
+                        @using(Html.BeginForm("Search", "Home", FormMethod.Get))
+                        {
+                            <input type="text" name="query" value="search"/>
+                            <input type="submit" />
+                        }
                     </section>
                     <nav>
                         <ul id="menu">
@@ -44,5 +48,12 @@
                 </div>
             </div>
         </footer>
+        <script type="text/javascript">
+            $("input[type=text][name=query]").focus(function () {
+                if ($(this).val() == "search") {
+                    $(this).val("");
+                }
+            })
+        </script>
     </body>
 </html>

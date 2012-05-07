@@ -149,12 +149,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Indexes\TasksCount_ForPerson.cs" />
+    <Compile Include="Indexes\Tasks.cs" />
     <Compile Include="Infrastructure\RavenDbController.cs" />
     <Compile Include="Infrastructure\RavenDbMVCExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ViewModels\ProjectIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeIndexViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomeSearchviewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Project\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

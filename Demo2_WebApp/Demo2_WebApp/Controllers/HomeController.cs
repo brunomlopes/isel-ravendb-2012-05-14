@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Demo2_WebApp.Indexes;
 using Demo2_WebApp.Infrastructure;
+using Demo2_WebApp.Models;
 using Demo2_WebApp.Models.ViewModels;
 
 namespace Demo2_WebApp.Controllers
@@ -18,6 +19,14 @@ namespace Demo2_WebApp.Controllers
                 .OrderBy(r => r.OwnerName)
                 .ToList();
             return View(new HomeIndexViewModel(){TasksPerPerson = tasksPerPerson});
+        }
+
+        public ActionResult Search(string query)
+        {
+            var tasks = RavenSession.Advanced.LuceneQuery<Task, Tasks>().Search("Name", "*" + query + "*")
+                .Take(10)
+                .ToList();
+            return View(new HomeSearchViewModel(){Query = query, Tasks = tasks});
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿@model Demo2_WebApp.Models.ViewModels.HomeSearchViewModel
+
+@{
+}
+
+<h2>Searching for "@Model.Query"</h2>
+
+<ul>
+@foreach (Demo2_WebApp.Models.Task task in Model.Tasks)
+{
+    <li><strong>@task.Name</strong> - @if (task.Done)
+                                      { <text>✓</text> }
+                                      else
+                                      {
+                                          <text>☐</text>
+                                      } ( @task.Owner.Name )</li>
+}
+</ul>
