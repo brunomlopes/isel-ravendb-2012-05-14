@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -223,6 +224,8 @@ namespace Demo2_WebApp
         private void SetupRavenDB()
         {
             Store = new DocumentStore() { ConnectionStringName = "RavenDB" }.Initialize();
+
+            IndexCreation.CreateIndexes(Assembly.GetCallingAssembly(), Store);
         }
 
 
