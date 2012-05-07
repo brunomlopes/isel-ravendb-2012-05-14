@@ -23,10 +23,12 @@ namespace Demo2_WebApp.Controllers
 
         public ActionResult Search(string query)
         {
-            var tasks = RavenSession.Advanced.LuceneQuery<Task, Tasks>().Search("Name", "*" + query + "*")
-                .Take(10)
-                .ToList();
-            return View(new HomeSearchViewModel(){Query = query, Tasks = tasks});
+            var homeSearchViewModel = new HomeSearchViewModel();
+            var result = RavenSession.Advanced.LuceneQuery<Task, Tasks>().Search("Name", "*" + query + "*").Take(10);
+            homeSearchViewModel.Tasks = result.ToList();
+            homeSearchViewModel.Query = query;
+            homeSearchViewModel.TotalResults = result.QueryResult.TotalResults;
+            return View(homeSearchViewModel);
         }
     }
 }

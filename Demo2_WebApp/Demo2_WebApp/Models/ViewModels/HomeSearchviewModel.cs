@@ -6,5 +6,6 @@ namespace Demo2_WebApp.Models.ViewModels
     {
         public string Query { get; set; }
         public IEnumerable<Task> Tasks { get; set; }
+        public int TotalResults { get; set; }
     }
 }
