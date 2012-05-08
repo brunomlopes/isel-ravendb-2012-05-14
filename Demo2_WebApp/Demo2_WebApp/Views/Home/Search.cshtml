@@ -9,13 +9,29 @@
 @foreach (var task in Model.Tasks)
 {
     <li><strong>@task.Name</strong> - @if (task.Done)
-                                      { <text>✓</text> }
+                                      { <text><span class="task_mark_as_not_done" data-taskid="@task.Id">✓</span></text> }
                                       else
                                       {
-                                          <text>☐</text>
+                                          <text><span class="task_mark_as_done" data-taskid="@task.Id">☐</span></text>
                                       } ( @task.OwnerName )</li>
 }
 </ul>
 <p>
     @Model.TotalResults results found.
 </p>
+<script type="text/javascript">
+    $(function () {
+        $(".task_mark_as_done").click(function () {
+            var taskId = $(this).data("taskid");
+            $.post("@Url.Action("MarkAsDone","Task")", { id: taskId }, function(data) {
+                window.location.reload(true);
+            }, "json");
+        });
+        $(".task_mark_as_not_done").click(function () {
+            var taskId = $(this).data("taskid");
+            $.post("@Url.Action("MarkAsNotDone","Task")", { id: taskId }, function(data) {
+                window.location.reload(true);
+            }, "json");
+        });
+    });
+</script>

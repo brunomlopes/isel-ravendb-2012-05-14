@@ -6,6 +6,7 @@ namespace Demo2_WebApp.Models.ViewModels
     {
         public class TaskViewModel
         {
+            public string Id { get; set; }
             public bool Done { get; set; }
             public string Name { get; set; }
             public string OwnerName { get; set; }
