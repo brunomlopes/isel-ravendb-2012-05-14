@@ -18,7 +18,15 @@ namespace Demo2_WebApp.Controllers
                 .Query<TasksCount_ForPerson.Result, TasksCount_ForPerson>()
                 //.OrderBy(r => r.OwnerName)
                 .ToList();
-            return View(new HomeIndexViewModel(){TasksPerPerson = tasksPerPerson});
+
+            var personIds = tasksPerPerson.Select(p => p.OwnerId);
+            var persons = RavenSession.Load<Person>(personIds).ToDictionary(t => t.Id);
+
+            return View(new HomeIndexViewModel()
+                            {
+                                TasksPerPerson = tasksPerPerson,
+                                Persons = persons
+                            });
         }
 
         public ActionResult Search(string query)
