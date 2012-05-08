@@ -16,8 +16,8 @@ namespace Demo2_WebApp.Controllers
             RavenQueryStatistics stats;
             var projects = RavenSession.Query<Project>()
                 .Statistics(out stats)
-                .Skip((page-1) * 10)
-                .Take(10)
+                .Skip((page-1) * 20)
+                .Take(20)
                 .ToList();
 
             viewModel.TotalResults = stats.TotalResults;
