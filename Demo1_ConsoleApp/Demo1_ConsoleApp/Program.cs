@@ -7,16 +7,16 @@ namespace Demo1_ConsoleApp
 {
     class Program
     {
-        class Apresentação
+        class Presentation
         {
             public string Id { get; set; }
-            public string Nome { get; set; }
-            public DateTime Data { get; set; }
-            public TimeSpan Duração { get; set; }
-            public Pessoa Apresentador { get; set; }
+            public string Name { get; set; }
+            public DateTime Date { get; set; }
+            public TimeSpan Duration { get; set; }
+            public Person Presenter { get; set; }
         }
 
-        class Pessoa
+        class Person
         {
             public string Nome { get; set; }
         }
