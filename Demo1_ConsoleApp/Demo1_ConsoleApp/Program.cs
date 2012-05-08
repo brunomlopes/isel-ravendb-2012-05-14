@@ -23,6 +23,17 @@ namespace Demo1_ConsoleApp
 
         static void Main(string[] args)
         {
+            var apresentação = new Presentation
+            {
+                Id = "RavenDB/ISEL",
+                Name = "Document Databases com RavenDB",
+                Presenter = new Person()
+                {
+                    Nome = "Bruno Lopes"
+                },
+                Date = new DateTime(2012, 05, 06, 09, 00, 00),
+                Duration = TimeSpan.FromHours(3),
+            };
         }
     }
 }
