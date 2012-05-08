@@ -8,10 +8,10 @@
 
 <h2>@Model.Projects.Count() projectos de @Model.TotalResults:</h2>
 
-@foreach(var project in Model.Projects)
+@foreach(var vm in Model.Projects)
 {
     <div>
-        <a href="@Url.Action("Details", new {id = project.Id.IntFromId()})"><strong>@project.Name</strong> </a> com <em>@project.Activities.Count</em> actividades.
+        <a href="@Url.Action("Details", new {id = vm.Project.Id.IntFromId()})"><strong>@vm.Project.Name</strong> </a> com <em>@vm.NumberOfActivities</em> actividades.
     </div>
 }
 <p>

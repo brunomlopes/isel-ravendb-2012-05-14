@@ -21,8 +21,14 @@ namespace Demo2_WebApp.Controllers
                 .ToList();
 
             viewModel.TotalResults = stats.TotalResults;
-            
-            viewModel.Projects = projects;
+
+            viewModel.Projects = projects.Select(project => new ProjectIndexViewModel.ProjectViewModel()
+                                                                {
+                                                                    Project = project,
+                                                                    NumberOfActivities = RavenSession
+                                                                        .Query<Activity>()
+                                                                        .Count(a => a.ProjectId == project.Id)
+                                                                });
             viewModel.Page = page;
             return View(viewModel);
         }
