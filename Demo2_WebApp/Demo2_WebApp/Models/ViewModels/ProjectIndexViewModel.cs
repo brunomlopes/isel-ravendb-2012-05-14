@@ -7,7 +7,8 @@ namespace Demo2_WebApp.Models.ViewModels
     {
         public class ProjectViewModel
         {
-            public Project Project { get; set; }
+            public string ProjectName { get; set; }
+            public string ProjectId { get; set; }
             public int NumberOfActivities { get; set; }
         }
 

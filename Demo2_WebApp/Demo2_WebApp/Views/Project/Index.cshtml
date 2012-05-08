@@ -11,7 +11,7 @@
 @foreach(var vm in Model.Projects)
 {
     <div>
-        <a href="@Url.Action("Details", new {id = vm.Project.Id.IntFromId()})"><strong>@vm.Project.Name</strong> </a> com <em>@vm.NumberOfActivities</em> actividades.
+        <a href="@Url.Action("Details", new {id = vm.ProjectId.IntFromId()})"><strong>@vm.ProjectName</strong> </a> com <em>@vm.NumberOfActivities</em> actividades.
     </div>
 }
 <p>

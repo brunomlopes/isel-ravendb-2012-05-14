@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Indexes\ActivitiesCount_PerProject.cs" />
     <Compile Include="Indexes\TasksCount_ForPerson.cs" />
     <Compile Include="Indexes\Tasks.cs" />
     <Compile Include="Infrastructure\RavenDbController.cs" />

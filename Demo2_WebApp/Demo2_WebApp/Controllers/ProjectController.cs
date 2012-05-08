@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Demo2_WebApp.Indexes;
 using Demo2_WebApp.Infrastructure;
 using Demo2_WebApp.Models;
 using System.Linq;
@@ -14,20 +15,19 @@ namespace Demo2_WebApp.Controllers
             var viewModel = new ProjectIndexViewModel();
 
             RavenQueryStatistics stats;
-            var projects = RavenSession.Query<Project>()
+            var projects = RavenSession.Query<ActivitiesCount_PerProject.Result,ActivitiesCount_PerProject>()
                 .Statistics(out stats)
-                .Skip((page-1) * 20)
-                .Take(20)
+                .Skip((page-1) * 100)
+                .Take(100)
                 .ToList();
 
             viewModel.TotalResults = stats.TotalResults;
 
-            viewModel.Projects = projects.Select(project => new ProjectIndexViewModel.ProjectViewModel()
+            viewModel.Projects = projects.Select(result => new ProjectIndexViewModel.ProjectViewModel()
                                                                 {
-                                                                    Project = project,
-                                                                    NumberOfActivities = RavenSession
-                                                                        .Query<Activity>()
-                                                                        .Count(a => a.ProjectId == project.Id)
+                                                                    ProjectName = result.ProjectName,
+                                                                    ProjectId = result.ProjectId,
+                                                                    NumberOfActivities = result.NumberOfActivities
                                                                 });
             viewModel.Page = page;
             return View(viewModel);
