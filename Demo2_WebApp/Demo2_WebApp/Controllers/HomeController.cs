@@ -32,8 +32,13 @@ namespace Demo2_WebApp.Controllers
         public ActionResult Search(string query)
         {
             var homeSearchViewModel = new HomeSearchViewModel();
-            var result = RavenSession.Advanced.LuceneQuery<Task, Tasks>().Search("Name", "*" + query + "*").Take(10);
-            homeSearchViewModel.Tasks = result.ToList();
+            var result = RavenSession.Advanced.LuceneQuery<Task, Tasks>().Search("Name", "*" + query + "*").Include("OwnerId").Take(100);
+            homeSearchViewModel.Tasks = result.Select(tasks => new HomeSearchViewModel.TaskViewModel()
+                                                               {
+                                                                   Name = tasks.Name,
+                                                                   Done = tasks.Done,
+                                                                   OwnerName = RavenSession.Load<Person>(tasks.OwnerId).Name
+                                                               }).ToList();
             homeSearchViewModel.Query = query;
             homeSearchViewModel.TotalResults = result.QueryResult.TotalResults;
             return View(homeSearchViewModel);
