@@ -17,7 +17,6 @@ namespace Demo2_WebApp
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static IDocumentStore Store;
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -53,6 +52,7 @@ namespace Demo2_WebApp
             SetupRavenDB();
         }
 
+        public static IDocumentStore Store;
         private void SetupRavenDB()
         {
             Store = new DocumentStore() { ConnectionStringName = "RavenDB" }.Initialize();
