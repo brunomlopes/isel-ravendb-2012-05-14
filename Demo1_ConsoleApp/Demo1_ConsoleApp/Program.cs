@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Raven.Client;
-using Raven.Client.Embedded;
+using Raven.Client.Document;
 
 namespace Demo1_ConsoleApp
 {
@@ -36,7 +36,10 @@ namespace Demo1_ConsoleApp
                 Date = new DateTime(2012, 05, 06, 09, 00, 00),
                 Duration = TimeSpan.FromHours(3),
             };
-            IDocumentStore documentStore = new EmbeddableDocumentStore();
+            IDocumentStore documentStore = new DocumentStore()
+                                               {
+                                                   Url = "http://localhost:8080"
+                                               };
             documentStore.Initialize();
 
             using (IDocumentSession session = documentStore.OpenSession())
