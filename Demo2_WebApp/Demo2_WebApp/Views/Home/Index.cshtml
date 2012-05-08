@@ -21,7 +21,8 @@
         <ul>
             @foreach(var personAndNumberOfTasks in Model.TasksPerPerson)
             {
-                <li>@personAndNumberOfTasks.Owner.Name - @personAndNumberOfTasks.Count</li> 
+                <!-- TODO : Get Owner-->
+                <li>@personAndNumberOfTasks.OwnerId - @personAndNumberOfTasks.Count</li> 
             }
         </ul>
     </section>

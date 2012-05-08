@@ -16,7 +16,7 @@ namespace Demo2_WebApp.Controllers
         {
             var tasksPerPerson = RavenSession
                 .Query<TasksCount_ForPerson.Result, TasksCount_ForPerson>()
-                .OrderBy(r => r.OwnerName)
+                //.OrderBy(r => r.OwnerName)
                 .ToList();
             return View(new HomeIndexViewModel(){TasksPerPerson = tasksPerPerson});
         }

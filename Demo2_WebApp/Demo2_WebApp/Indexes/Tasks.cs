@@ -5,28 +5,14 @@ using Raven.Client.Indexes;
 
 namespace Demo2_WebApp.Indexes
 {
-    public class Tasks : AbstractIndexCreationTask<Project, Task>
+    public class Tasks : AbstractIndexCreationTask<Task>
     {
         public Tasks()
         {
-            Map = projects => from project in projects
-                              from activity in project.Activities
-                              from task in activity.Tasks
+            Map = tasks => from task in tasks
                               select new
                                          {
-                                             task.Done,
-                                             task.Owner,
                                              task.Name,
-                                         };
-
-            Reduce = tasks => from task in tasks
-                              group task by new {task.Name, task.Done, task.Owner}
-                              into task
-                              select new
-                                         {
-                                             task.First().Done,
-                                             task.First().Owner,
-                                             task.First().Name
                                          };
 
             Index(t => t.Name, FieldIndexing.Analyzed);
