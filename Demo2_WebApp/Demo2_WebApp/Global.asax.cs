@@ -186,6 +186,21 @@ namespace Demo2_WebApp
                                                                                            Name = "Get approval from SPECTRE",
                                                                                            Owner = blofeld
                                                                                        },
+                                                                                   new Task
+                                                                                       {
+                                                                                           Name = "Setup Firing Squads",
+                                                                                           Owner = blofeld
+                                                                                       },
+                                                                                    new Task
+                                                                                       {
+                                                                                           Name = "Get a running team",
+                                                                                           Owner = blofeld
+                                                                                       },
+                                                                                    new Task
+                                                                                       {
+                                                                                           Name = "Run henchmen to the ground",
+                                                                                           Owner = blofeld
+                                                                                       },
                                                                                }
                                                                }
                                                        }
