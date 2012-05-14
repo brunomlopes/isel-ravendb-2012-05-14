@@ -1,4 +1,4 @@
-This is the source code for my "Document Databases and RavenDB" presentation at ISEL.
+This is the source code for my "Document Databases and RavenDB" presentation at ISEL. It assumes stable version 888 of RavenDB.
 
 There are several branches, each representing one step in the presentation.
 
