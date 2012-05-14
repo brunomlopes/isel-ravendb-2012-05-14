@@ -8,4 +8,4 @@ There are several branches, each representing one step in the presentation.
 
 This is sample code to support the presentation and to show different options and occasionally represents different ways of solving the same issue.
 
-The presentation slide deck is also available as a [.pptx](Presentation-final.pptx) and as a [.pdf](Presentation-final.pdf).
+The presentation slide deck is also available as a [.pptx](https://github.com/brunomlopes/isel-ravendb-2012-05-14/raw/master/Presentation-final.pptx) and as a [.pdf](https://github.com/brunomlopes/isel-ravendb-2012-05-14/raw/master/Presentation-final.pdf).
